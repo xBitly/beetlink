@@ -25,6 +25,16 @@ class WebController {
         return "home"
     }
 
+    @GetMapping("/terms")
+    fun showTerms(): String {
+        return "terms"
+    }
+
+    @GetMapping("/privacy")
+    fun showPrivacy(): String {
+        return "privacy"
+    }
+
     @GetMapping("/error")
     fun showError(): String {
         return "error"
