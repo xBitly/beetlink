@@ -28,6 +28,14 @@ svg {
     transform: translateX(-50%);
 }
 
+a {
+    user-select: none;
+}
+
+a:active {
+    background-color: transparent;
+}
+
 @media screen and (max-width: 767px) {
     h1 {
         font-size: 32px;

@@ -28,7 +28,13 @@ main {
 a {
     text-decoration: none;
     display: flex;
+    user-select: none;
 }
+
+a:active {
+    background-color: transparent;
+}
+
 
 h1 {
     font-size: 36px;
@@ -48,6 +54,7 @@ h6 a{
     color: #000;
     text-decoration: underline;
     display: inline;
+    user-select: none;
 }
 
 h5 {
@@ -60,14 +67,23 @@ h5 {
 h5 a{
     color: #000;
     display: inline;
+    user-select: none;
 }
 
 h6 a:hover {
     color: #555;
 }
 
+h6 a:active {
+    background-color: transparent;
+}
+
 h5 a:hover {
     color: #555;
+}
+
+h5 a:active {
+    background-color: transparent;
 }
 
 input[type="email"],

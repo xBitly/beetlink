@@ -43,7 +43,13 @@ nav {
 a {
     text-decoration: none;
     display: flex;
+    user-select: none;
 }
+
+a:active {
+    background-color: transparent;
+}
+
 
 footer {
     width: 100%;
@@ -191,14 +197,14 @@ h2 {
 
 @media screen and (max-width: 767px) {
     header {
-        padding: 8px;
+        padding: 0;
         flex-direction: column;
         justify-content: center;
         gap: 8px;
     }
 
     main {
-        padding: 8px 16px;
+        padding: 64px 16px;
         gap: 4px;
         flex-shrink: 0;
     }
@@ -234,6 +240,7 @@ h2 {
         padding: 8px 16px;
         gap: 4px;
         align-items: flex-start;
+        align-content: flex-start;
     }
 
     .link {

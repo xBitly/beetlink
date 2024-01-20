@@ -20,6 +20,11 @@ class WebController {
         return "signup"
     }
 
+    @GetMapping("/home")
+    fun showHome(): String {
+        return "home"
+    }
+
     @GetMapping("/error")
     fun showError(): String {
         return "error"
