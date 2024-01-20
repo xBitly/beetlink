@@ -17,7 +17,7 @@ class TokenManager(
     private val jwtSecretAccess = Keys.hmacShaKeyFor(jwtSecretAccess.toByteArray())
     private val jwtSecretRefresh = Keys.hmacShaKeyFor(jwtSecretRefresh.toByteArray())
 
-    private val accessTokenLimit = 60 * 60
+    private val accessTokenLimit = 60 * 60 * 24
     private val refreshTokenLimit = 60 * 60 * 24 * 30
 
     fun generateAccessToken(user: User): String {

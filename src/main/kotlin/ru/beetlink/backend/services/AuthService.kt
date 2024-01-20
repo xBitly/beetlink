@@ -38,7 +38,7 @@ class AuthService(
             }
             return getToken(user, false)
         }
-        throw NotFoundException("User with this(${request.email}) email is not found")
+        throw NotFoundException("пользователь не найден")
     }
 
     fun refresh(refreshToken: String): AuthTokenInfo {
@@ -67,7 +67,7 @@ class AuthService(
             }
             user.password = request.newPassword
             userRepository.save(user)
-        } ?: run { throw NotFoundException("User with id$userId is not found") }
+        } ?: run { throw NotFoundException("пользователь не найден") }
     }
 
     fun getToken(user: User, registration: Boolean): AuthTokenInfo{

@@ -25,7 +25,7 @@ class UserService(
         return userRepository.getUserById(userId)?.let { user ->
             toDtoWrapper(user, selfId)
         } ?: run {
-            throw NotFoundException("User with id$userId is not found")
+            throw NotFoundException("пользователь не найден")
         }
     }
 
@@ -33,7 +33,7 @@ class UserService(
         userRepository.getUserById(userId)?.let { user ->
             user.role = role
             userRepository.save(user)
-        } ?: throw NotFoundException("User with id$userId is not found")
+        } ?: throw NotFoundException("пользователь не найден")
     }
 
 //    fun setUserProfile(userId: Long, request: ProfileRequest) {

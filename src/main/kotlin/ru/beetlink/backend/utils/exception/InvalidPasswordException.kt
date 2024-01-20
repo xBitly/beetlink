@@ -5,5 +5,5 @@ import ru.beetlink.backend.utils.exception.AbstractApiException
 
 class InvalidPasswordException : AbstractApiException(
     status = HttpStatus.CONFLICT,
-    message = "Invalid password"
+    message = "неверный пароль"
 )

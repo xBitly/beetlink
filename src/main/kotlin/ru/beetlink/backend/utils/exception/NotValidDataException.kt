@@ -5,5 +5,5 @@ import ru.beetlink.backend.utils.exception.AbstractApiException
 
 class NotValidDataException : AbstractApiException(
     status = HttpStatus.CONFLICT,
-    message = "Not valid data"
+    message = "неккоректные данные"
 )

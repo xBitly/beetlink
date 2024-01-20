@@ -5,5 +5,5 @@ import ru.beetlink.backend.utils.exception.AbstractApiException
 
 class InternalServerException : AbstractApiException(
     status = HttpStatus.INTERNAL_SERVER_ERROR,
-    message = "Something went wrong"
+    message = "что-то пошло не так"
 )
