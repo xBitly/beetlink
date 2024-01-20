@@ -11,12 +11,17 @@ class WebController {
     }
 
     @GetMapping("/signin")
-    fun signin(): String {
+    fun showSignIn(): String {
         return "signin"
     }
 
     @GetMapping("/signup")
-    fun signup(): String {
+    fun showSignUp(): String {
         return "signup"
+    }
+
+    @GetMapping("/error")
+    fun showError(): String {
+        return "error"
     }
 }
