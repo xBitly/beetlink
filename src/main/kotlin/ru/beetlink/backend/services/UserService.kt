@@ -8,6 +8,8 @@ import ru.beetlink.backend.models.repository.UserRepository
 import ru.beetlink.backend.utils.exception.NotFoundException
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
+import ru.beetlink.backend.models.dto.response.link.LinkInfo
+import ru.beetlink.backend.models.dto.response.link.toDto
 import java.io.File
 import java.util.*
 
@@ -15,10 +17,12 @@ import java.util.*
 class UserService(
     @Autowired private val userRepository: UserRepository
 ) {
-    fun getUsers(filter: String, selfId: Long): List<UserInfo> {
-        return userRepository.findAll().filter {
-            it.role.toString().contains(filter)
-        }.map { toDtoWrapper(it, selfId) }
+    fun getUserLinks(userId: Long): List<LinkInfo> {
+        return userRepository.getUserById(userId)?.let { user ->
+            user.links.map { it.toDto() }
+        } ?: run {
+            throw NotFoundException("пользователь не найден")
+        }
     }
 
     fun getUserById(userId: Long, selfId: Long): UserInfo {

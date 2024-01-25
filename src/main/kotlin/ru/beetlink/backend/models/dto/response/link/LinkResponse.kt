@@ -6,14 +6,14 @@ data class LinkInfo(
     val id: Long,
     val originalUrl: String,
     val shortUrl: String,
-    val description: String
+    val description: String?
 )
 
 fun Link.toDto(): LinkInfo {
     return LinkInfo(
         id = id,
         originalUrl = originalUrl,
-        shortUrl = shortId,
+        shortUrl = shortId ?: "error",
         description = description
     )
 }

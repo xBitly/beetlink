@@ -15,6 +15,7 @@ import ru.beetlink.backend.utils.token.TokenManager
 import jakarta.transaction.Transactional
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
+import ru.beetlink.backend.models.dto.request.auth.toEntity
 
 @Service
 class AuthService(

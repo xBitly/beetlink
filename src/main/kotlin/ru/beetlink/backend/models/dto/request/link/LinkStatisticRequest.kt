@@ -6,20 +6,16 @@ import java.time.LocalDateTime
 
 data class LinkStatisticRequest(
     val linkId: Long,
-    val timestamp: LocalDateTime,
     val ipAddress: String,
-    val country: String?,
-    val city: String?,
+    val language: String?,
     val deviceType: String?
 )
 
 fun LinkStatisticRequest.toEntity(link: Link): LinkStatistic {
     return LinkStatistic(
         link = link,
-        timestamp = this.timestamp,
         ipAddress = this.ipAddress,
-        country = this.country ?: "неизвестно",
-        city = this.city ?: "неизвестно",
+        language = this.language ?: "неизвестно",
         deviceType = this.deviceType ?: "неизвестно"
     )
 }

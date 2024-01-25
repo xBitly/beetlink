@@ -4,15 +4,16 @@ import ru.beetlink.backend.models.entity.link.Link
 import ru.beetlink.backend.models.entity.user.User
 
 data class LinkRequest(
-    val userId: Long,
-    val originalUrl: String
+    val originalUrl: String,
+    val description: String?
 )
 
 fun LinkRequest.toEntity(user: User): Link {
     return Link(
         user = user,
         originalUrl = this.originalUrl,
-        shortId = "", // Не используем здесь, так как он будет сгенерирован в конструкторе
-        statistics = mutableListOf()
+        shortId = null,
+        description = description
     )
 }
+

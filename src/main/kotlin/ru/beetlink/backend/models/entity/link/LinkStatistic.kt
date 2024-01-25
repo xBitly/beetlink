@@ -12,17 +12,11 @@ class LinkStatistic(
     @JoinColumn(name = "link_id")
     var link: Link,
 
-    @Column(name = "timestamp")
-    var timestamp: LocalDateTime,
-
     @Column(name = "ip_address")
     var ipAddress: String,
 
-    @Column(name = "country")
-    var country: String,
-
-    @Column(name = "city")
-    var city: String,
+    @Column(name = "language")
+    var language: String,
 
     @Column(name = "device_type")
     var deviceType: String
