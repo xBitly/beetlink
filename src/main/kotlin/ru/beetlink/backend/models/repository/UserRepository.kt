@@ -9,4 +9,5 @@ interface UserRepository: CrudRepository<User, Long> {
     fun existsByEmail(email: String): Boolean
     fun getUserById(id: Long): User?
     fun getUserByEmail(email: String): User?
+    fun removeUserById(id: Long)
 }

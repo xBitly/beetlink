@@ -3,7 +3,7 @@ package ru.beetlink.backend.services
 import ru.beetlink.backend.models.dto.request.auth.AccountInput
 import ru.beetlink.backend.models.dto.request.auth.CredentialsRequest
 import ru.beetlink.backend.models.dto.request.auth.PasswordRequest
-import ru.beetlink.backend.models.dto.request.auth.toEntity
+import ru.beetlink.backend.models.dto.request.link.toEntity
 import ru.beetlink.backend.models.dto.response.auth.AuthTokenInfo
 import ru.beetlink.backend.models.dto.response.auth.toDto
 import ru.beetlink.backend.models.dto.response.auth.toEntity
