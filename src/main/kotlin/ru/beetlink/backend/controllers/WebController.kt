@@ -1,10 +1,18 @@
 package ru.beetlink.backend.controllers
 
+import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.security.core.Authentication
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.ResponseBody
+import ru.beetlink.backend.models.dto.response.user.UserInfo
+import ru.beetlink.backend.services.UserService
+import ru.beetlink.backend.utils.exception.NotFoundException
 
 @Controller
-class WebController {
+class WebController (
+    @Autowired private val userService: UserService
+) {
     @GetMapping(value = ["", "/"])
     fun showLanding(): String {
         return "index"

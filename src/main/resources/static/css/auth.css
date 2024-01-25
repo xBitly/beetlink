@@ -155,8 +155,9 @@ input[type="password"]::placeholder {
     align-content: center;
     text-align: center;
     border-radius: 16px;
-    background: #000;
-    color: #FFF;
+    background: #FFF;
+    border: 1.5px solid #FF3333;
+    color: #FF3333;
     font-family: 'Montserrat', sans-serif;
     font-size: 16px;
     font-weight: 400;
