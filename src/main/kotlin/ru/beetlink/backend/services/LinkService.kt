@@ -32,16 +32,21 @@ class LinkService(
     }
 
     @Transactional
-    fun getLinkByShortId(shortId: String, request: HttpServletRequest): LinkInfo {
+    fun getLinkByShortId(shortId: String, request: HttpServletRequest): String {
         linkRepository.getLinkByShortId(shortId)?.let { link ->
             val statistic = LinkStatistic(
                 link = link,
                 ipAddress = getClientIp(request),
-                language = detectUserLanguage(request) ?: "неизвестно",
+                language = detectUserLanguage(request),
                 deviceType = detectDeviceType(request) ?: "неизвестно"
             )
             link.addStatistic(statistic)
-            return link.toDto()
+            return when (statistic.deviceType) {
+                "ios" -> link.iosUrl ?: link.defaultUrl
+                "android" -> link.androidUrl ?: link.defaultUrl
+                "desktop" -> link.desktopUrl ?: link.defaultUrl
+                else -> link.defaultUrl
+            }
         } ?: throw NotFoundException("ссылка не найдена")
     }
 
@@ -59,7 +64,7 @@ class LinkService(
         return when {
             userAgent?.contains("android") == true -> "android"
             userAgent?.contains("iphone") == true || userAgent?.contains("ipad") == true -> "ios"
-            userAgent?.contains("macintosh") == true || userAgent?.contains("mac os") == true || userAgent?.contains("windows") == true -> "web"
+            userAgent?.contains("macintosh") == true || userAgent?.contains("mac os") == true || userAgent?.contains("windows") == true -> "desktop"
             else -> null
         }
     }
@@ -82,7 +87,10 @@ class LinkService(
     fun updateLink(userId: Long, linkId: Long, linkRequest: LinkRequest) {
         linkRepository.getLinkById(linkId)?.let { link ->
             if (link.user.id == userId) {
-                link.originalUrl = linkRequest.originalUrl
+                link.iosUrl = linkRequest.iosUrl
+                link.androidUrl = linkRequest.androidUrl
+                link.desktopUrl = linkRequest.desktopUrl
+                link.defaultUrl = linkRequest.defaultUrl
                 link.description = linkRequest.description
                 linkRepository.save(link)
             } else {

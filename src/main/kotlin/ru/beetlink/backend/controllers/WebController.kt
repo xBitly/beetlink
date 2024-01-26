@@ -61,9 +61,8 @@ class WebController (
         @PathVariable shortId: String,
         request: HttpServletRequest
     ): ResponseEntity<Void> {
-        val linkInfo = linkService.getLinkByShortId(shortId, request)
         return ResponseEntity.status(HttpStatus.FOUND)
-            .header(HttpHeaders.LOCATION, linkInfo.originalUrl)
+            .header(HttpHeaders.LOCATION, linkService.getLinkByShortId(shortId, request))
             .build()
     }
 

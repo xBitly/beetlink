@@ -4,14 +4,20 @@ import ru.beetlink.backend.models.entity.link.Link
 import ru.beetlink.backend.models.entity.user.User
 
 data class LinkRequest(
-    val originalUrl: String,
+    val iosUrl: String?,
+    val androidUrl: String?,
+    val desktopUrl: String?,
+    val defaultUrl: String,
     val description: String?
 )
 
 fun LinkRequest.toEntity(user: User): Link {
     return Link(
         user = user,
-        originalUrl = this.originalUrl,
+        iosUrl = iosUrl,
+        androidUrl = androidUrl,
+        desktopUrl = desktopUrl,
+        defaultUrl = defaultUrl,
         shortId = null,
         description = description
     )

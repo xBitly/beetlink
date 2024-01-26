@@ -12,8 +12,17 @@ class Link(
     @JoinColumn(name = "user_id")
     var user: User,
 
-    @Column(name = "original_url", nullable = false)
-    var originalUrl: String,
+    @Column(name = "ios_url")
+    var iosUrl: String?,
+
+    @Column(name = "android_url")
+    var androidUrl: String?,
+
+    @Column(name = "desktop_url")
+    var desktopUrl: String?,
+
+    @Column(name = "default_url", nullable = false)
+    var defaultUrl: String,
 
     @Column(name = "description")
     var description: String?,
