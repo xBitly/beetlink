@@ -1,5 +1,6 @@
 package ru.beetlink.backend.services
 
+import jakarta.transaction.Transactional
 import ru.beetlink.backend.models.dto.response.user.UserInfo
 import ru.beetlink.backend.models.dto.response.user.toDto
 import ru.beetlink.backend.models.entity.user.Role
@@ -17,6 +18,8 @@ import java.util.*
 class UserService(
     @Autowired private val userRepository: UserRepository
 ) {
+
+    @Transactional
     fun getUserLinks(userId: Long): List<LinkInfo> {
         return userRepository.getUserById(userId)?.let { user ->
             user.links.map { it.toDto() }

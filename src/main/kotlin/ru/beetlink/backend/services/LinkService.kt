@@ -10,13 +10,11 @@ import ru.beetlink.backend.models.dto.response.link.LinkInfo
 import ru.beetlink.backend.models.dto.response.link.LinkStatisticInfo
 import ru.beetlink.backend.models.dto.response.link.toDto
 import ru.beetlink.backend.models.entity.link.LinkStatistic
-import ru.beetlink.backend.models.entity.user.User
 import ru.beetlink.backend.models.repository.LinkRepository
 import ru.beetlink.backend.models.repository.UserRepository
 import ru.beetlink.backend.utils.exception.NotFoundException
 import ru.beetlink.backend.utils.exception.AccessDeniedException
 import java.time.LocalDate
-import java.time.LocalDateTime
 
 @Service
 class LinkService(
@@ -31,7 +29,7 @@ class LinkService(
             val savedLink = linkRepository.save(link)
             return savedLink.toDto()
         } ?: throw NotFoundException("пользователь не найден")
-    } //todo optimize
+    }
 
     @Transactional
     fun getLinkByShortId(shortId: String, request: HttpServletRequest): LinkInfo {

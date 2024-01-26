@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.security.core.Authentication
 import org.springframework.web.bind.annotation.*
+import ru.beetlink.backend.models.dto.response.link.LinkInfo
 import java.io.File
 
 @RestController
@@ -17,11 +18,12 @@ import java.io.File
 class UserController(
     @Autowired private val userService: UserService
 ) {
-    @GetMapping("/{userId}")
+    @GetMapping("/{userId}/links")
     @ResponseBody
-    fun getUserById(@PathVariable userId: String, auth: Authentication): UserInfo {
-        val realId = if (userId == "self") auth.principal as Long else userId.toLong()
-        return userService.getUserById(realId, auth.principal as Long)
+    fun getUserLinks(@PathVariable userId: String, auth: Authentication): List<LinkInfo> {
+        if (userId == "self") {
+            return userService.getUserLinks(auth.principal as Long)
+        } else throw AccessDeniedException()
     }
 
     @PostMapping("/{userId}/role")
