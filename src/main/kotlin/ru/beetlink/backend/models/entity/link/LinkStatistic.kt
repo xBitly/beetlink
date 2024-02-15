@@ -19,6 +19,9 @@ class LinkStatistic(
     var language: String,
 
     @Column(name = "device_type")
-    var deviceType: String
+    var deviceType: String,
+
+    @Column(name = "referer")
+    var referer: String
 ) : AbstractEntity() {
 }

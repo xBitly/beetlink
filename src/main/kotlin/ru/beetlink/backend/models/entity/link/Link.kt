@@ -24,7 +24,7 @@ class Link(
     @Column(name = "default_url", nullable = false)
     var defaultUrl: String,
 
-    @Column(name = "description")
+    @Column(name = "description", length = 255)
     var description: String?,
 
     @Column(name = "short_id", unique = true)
@@ -64,5 +64,5 @@ class Link(
         }
 
         shortId = sb.reverse().toString()
-    }
+    } //TODO: exist by path in web
 }

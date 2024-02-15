@@ -1,6 +1,7 @@
 package ru.beetlink.backend.models.dto.response.link
 
 import ru.beetlink.backend.models.entity.link.Link
+import java.time.LocalDateTime
 
 data class LinkInfo(
     val id: Long,
@@ -9,7 +10,8 @@ data class LinkInfo(
     val desktopUrl: String?,
     val defaultUrl: String,
     val shortUrl: String,
-    val description: String?
+    val description: String?,
+    val createdAt: LocalDateTime
 )
 
 fun Link.toDto(): LinkInfo {
@@ -20,6 +22,7 @@ fun Link.toDto(): LinkInfo {
         desktopUrl = desktopUrl,
         defaultUrl = defaultUrl,
         shortUrl = shortId ?: "error",
-        description = description
+        description = description,
+        createdAt = createdAt
     )
 }

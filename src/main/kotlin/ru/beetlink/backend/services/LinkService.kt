@@ -38,7 +38,8 @@ class LinkService(
                 link = link,
                 ipAddress = getClientIp(request),
                 language = detectUserLanguage(request),
-                deviceType = detectDeviceType(request) ?: "неизвестно"
+                deviceType = detectDeviceType(request) ?: "неизвестно",
+                referer = detectReferer(request) ?: "прямое посещение"
             )
             link.addStatistic(statistic)
             return when (statistic.deviceType) {
@@ -60,7 +61,7 @@ class LinkService(
     }
 
     private fun detectDeviceType(request: HttpServletRequest): String? {
-        val userAgent = request.getHeader("User-Agent")?.toLowerCase()
+        val userAgent = request.getHeader("User-Agent")?.lowercase()
         return when {
             userAgent?.contains("android") == true -> "android"
             userAgent?.contains("iphone") == true || userAgent?.contains("ipad") == true -> "ios"
@@ -68,6 +69,24 @@ class LinkService(
             else -> null
         }
     }
+
+    private fun detectReferer(request: HttpServletRequest): String? {
+        val referer = request.getHeader("Referer")?.lowercase()
+
+        val queryString = request.queryString
+        if (queryString != null) {
+            val params = queryString.split("&")
+            for (param in params) {
+                val keyValue = param.split("=")
+                if (keyValue.size == 2 && keyValue[0] == "utm_source") {
+                    return keyValue[1].lowercase()
+                }
+            }
+        }
+
+        return referer?.lowercase()
+    }
+
 
     private fun detectUserLanguage(request: HttpServletRequest): String {
         return request.getHeader("Accept-Language")?.substring(0, 2)?.lowercase() ?: "неизвестно"

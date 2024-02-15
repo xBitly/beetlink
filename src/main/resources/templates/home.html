@@ -3,9 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <title>главная</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     <link rel="stylesheet" href="../static/css/home.css">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <link rel="icon" href="/images/favicon.svg" type="image/x-icon">
+    <link rel="shortcut icon" href="/images/favicon.svg" type="image/x-icon">
 </head>
 <body>
 <header>
@@ -24,9 +26,9 @@
         </svg>
     </a>
     <nav>
-        <a href="/settings">
+        <a href="/">
             <div class="secondary-button">
-                настройки
+                назад
             </div>
         </a>
         <a href="/create">
@@ -37,8 +39,22 @@
     </nav>
 </header>
 <div id="links-container">
-
+    <div id="loading">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M8.17404 13.7391C8.17404 13.7391 4.69577 10.2609 7.47839 7.47826C10.261 4.69566 13.7392 8.17393 13.7392 8.17393" stroke="black" stroke-width="1.5" stroke-linecap="round"/>
+            <path d="M15.8262 10.2609C15.8262 10.2609 19.3045 13.7391 16.5218 16.5217C13.7392 19.3044 10.261 15.8261 10.261 15.8261" stroke="black" stroke-width="1.5" stroke-linecap="round"/>
+            <path d="M11.6521 11.6522L13.739 13.7391" stroke="black" stroke-width="1.5" stroke-linecap="round"/>
+            <path d="M16.5217 7.47828L17.913 6.08698" stroke="black" stroke-width="1.5" stroke-linecap="round"/>
+            <path d="M14.4348 6.08696V4" stroke="black" stroke-width="1.5" stroke-linecap="round"/>
+            <path d="M17.9131 9.56525H20.0001" stroke="black" stroke-width="1.5" stroke-linecap="round"/>
+            <path d="M7.47821 16.5217L6.08691 17.913" stroke="black" stroke-width="1.5" stroke-linecap="round"/>
+            <path d="M9.56519 17.913V20" stroke="black" stroke-width="1.5" stroke-linecap="round"/>
+            <path d="M6.08696 14.4348H4" stroke="black" stroke-width="1.5" stroke-linecap="round"/>
+        </svg>
+    </div>
 </div>
+<div id="successNotification">ссылка скопирована</div>
+<div id="errorNotification">ошибка</div>
 <script src="../static/js/home.js"></script>
 </body>
 </html>

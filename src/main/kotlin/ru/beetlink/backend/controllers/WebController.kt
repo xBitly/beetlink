@@ -26,6 +26,16 @@ class WebController (
         return "index"
     }
 
+    @GetMapping("/links/{id}")
+    fun showLink(): String {
+        return "link"
+    }
+
+    @GetMapping("/create")
+    fun showCreate(): String {
+        return "create"
+    }
+
     @GetMapping("/signin")
     fun showSignIn(): String {
         return "signin"

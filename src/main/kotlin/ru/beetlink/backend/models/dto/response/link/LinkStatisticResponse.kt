@@ -7,7 +7,8 @@ data class LinkStatisticInfo (
     val createdAt: LocalDateTime,
     val ipAddress: String,
     val language: String,
-    val deviceType: String
+    val deviceType: String,
+    val referer: String
 )
 
 fun LinkStatistic.toDto(): LinkStatisticInfo {
@@ -15,6 +16,7 @@ fun LinkStatistic.toDto(): LinkStatisticInfo {
         createdAt = createdAt,
         ipAddress = ipAddress,
         language = language,
-        deviceType = deviceType
+        deviceType = deviceType,
+        referer = referer
     )
 }

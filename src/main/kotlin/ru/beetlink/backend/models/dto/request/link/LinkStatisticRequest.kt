@@ -8,7 +8,8 @@ data class LinkStatisticRequest(
     val linkId: Long,
     val ipAddress: String,
     val language: String?,
-    val deviceType: String?
+    val deviceType: String?,
+    val referer: String?
 )
 
 fun LinkStatisticRequest.toEntity(link: Link): LinkStatistic {
@@ -16,6 +17,7 @@ fun LinkStatisticRequest.toEntity(link: Link): LinkStatistic {
         link = link,
         ipAddress = this.ipAddress,
         language = this.language ?: "неизвестно",
-        deviceType = this.deviceType ?: "неизвестно"
+        deviceType = this.deviceType ?: "неизвестно",
+        referer = this.referer ?: "прямое посещение"
     )
 }
