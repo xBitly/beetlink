@@ -1,6 +1,10 @@
 let selected = 'обычная';
 let linkt;
 let idl;
+let today;
+let startDate_;
+let endDate_;
+let statisticsData;
 
 function copy(event) {
     event.stopPropagation();
@@ -33,6 +37,8 @@ async function loadLink(linkId) {
 
     if (response.status === 403) {
         window.location.href = '/signin';
+    } else if (response.status === 404) {
+        //window.location.href = '/error';
     } else {
         const link = await response.json();
 
@@ -81,7 +87,128 @@ document.addEventListener('DOMContentLoaded', function () {
     submitButton.addEventListener('click', function(event) {
         handleSubmit(event, id);
     });
+
+    const startDateInput = document.querySelector('#startDate');
+    const endDateInput = document.querySelector('#endDate');
+
+    today = new Date().toISOString().split('T')[0];
+    startDate_ = today;
+    endDate_ = today;
+
+    endDateInput.setAttribute('placeholder', `${today.split('-')[2]}.${today.split('-')[1]}.${today.split('-')[0]}`);
+    startDateInput.setAttribute('placeholder', `${today.split('-')[2]}.${today.split('-')[1]}.${today.split('-')[0]}`);
+
+    const maskOptions = {
+        mask: '00.00.0000'
+    }
+    IMask(endDateInput, maskOptions)
+    IMask(startDateInput, maskOptions)
+
+    updateStatistics(startDate_, endDate_, idl)
+
+    startDateInput.addEventListener('input', function (){
+        if(startDateInput.value.length === 10) {
+            startDate_ = convertDateFormat(startDateInput.value);
+            updateStatistics(startDate_, endDate_, idl)
+        }
+    });
+
+    endDateInput.addEventListener('input', function (){
+        if(endDateInput.value.length === 10) {
+            endDate_ = convertDateFormat(endDateInput.value);
+            updateStatistics(startDate_, endDate_, idl)
+        }
+    });
+
+
+    const exportButton = document.querySelector('#export');
+    exportButton.addEventListener('click', async function () {
+        try {
+            const csvData = convertJSONToCSV(statisticsData);
+            downloadCSV(csvData);
+        } catch (error) {
+            console.error('Ошибка:', error);
+        }
+    });
 });
+
+function convertDateFormat(dateString) {
+    const parts = dateString.split('.');
+
+    if (parts.length !== 3) {
+        return null;
+    }
+
+    const day = parts[0];
+    const month = parts[1];
+    const year = parts[2];
+
+    return `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`;
+}
+
+async function updateStatistics(startDate, endDate, linkId) {
+    try {
+        const response = await fetch(`/api/v1/links/${linkId}/statistics?startDate=${startDate}&endDate=${endDate}`, {
+            method: 'GET',
+            headers: {
+                'Authorization': `Bearer ${getCookie('accessToken')}`
+            }
+        });
+
+        if (response.status === 403) {
+            window.location.href = '/signin';
+        }
+
+        if (!response.ok) {
+            const jsonError = await response.json();
+            throw new Error(jsonError.message);
+        }
+
+        statisticsData = await response.json();
+        console.log('Statistics Data:', statisticsData);
+
+    } catch (error) {
+        console.error('Ошибка:', error);
+        showErrorNotification(error.message);
+    }
+}
+
+function convertJSONToCSV(jsonData) {
+    const separator = ',';
+    const keys = Object.keys(jsonData[0]);
+
+    let csv = keys.join(separator) + '\n';
+
+    jsonData.forEach(item => {
+        keys.forEach((key, index) => {
+            if (item.hasOwnProperty(key)) {
+                csv += item[key];
+                if (index < keys.length - 1) {
+                    csv += separator;
+                }
+            }
+        });
+        csv += '\n';
+    });
+
+    return csv;
+}
+
+function downloadCSV(csvData) {
+    const blob = new Blob([csvData], { type: 'text/csv;charset=utf-8;' });
+
+    const link = document.createElement('a');
+    if (link.download !== undefined) {
+        const url = URL.createObjectURL(blob);
+        link.setAttribute('href', url);
+        link.setAttribute('download', 'statistics.csv');
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    } else {
+        showErrorNotification('ошибка загрузки');
+    }
+}
 
 async function handleSubmit(event, linkId) {
     event.preventDefault();
@@ -143,21 +270,7 @@ async function handleSubmit(event, linkId) {
     }
 }
 
-
-function showSuccessNotification(message) {
-    const errorNotification = document.getElementById('successNotification');
-    const errorMessage = document.createElement('div');
-    errorNotification.appendChild(errorMessage);
-    errorNotification.textContent = message;
-    errorNotification.style.display = 'block';
-
-    setTimeout(() => {
-        errorNotification.style.display = 'none';
-    }, 5000);
-}
-
 async function updateLink(linkData, linkId) {
-    console.log('err1')
     const response = await fetch(`/api/v1/links/${linkId}`, {
         method: 'PUT',
         headers: {
@@ -166,26 +279,31 @@ async function updateLink(linkData, linkId) {
         },
         body: JSON.stringify(linkData),
     });
-    console.log('err2')
-
-    console.log('Response from server:', response);
 
     if (response.status === 403) {
         window.location.href = '/signin';
     }
 
-    console.log('err3')
     if (!response.ok) {
-        console.log('err')
         const jsonError = await response.json();
         throw new Error(jsonError.message);
     }
-
-    console.log('err4')
 }
 
 function showErrorNotification(message) {
     const errorNotification = document.getElementById('errorNotification');
+    errorNotification.textContent = message;
+    errorNotification.style.display = 'block';
+
+    setTimeout(() => {
+        errorNotification.style.display = 'none';
+    }, 5000);
+}
+
+function showSuccessNotification(message) {
+    const errorNotification = document.getElementById('successNotification');
+    const errorMessage = document.createElement('div');
+    errorNotification.appendChild(errorMessage);
     errorNotification.textContent = message;
     errorNotification.style.display = 'block';
 

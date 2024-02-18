@@ -46,10 +46,10 @@ class Link(
     }
 
     fun generateShortId() {
-        val alphabet = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
+        val alphabet = "0123456789abcdefghijklmnopqrstuvwxyz"
 
         var number = this.id
-        val base = 62
+        val base = 36
         val sb = StringBuilder()
 
         if (number == 0L) {

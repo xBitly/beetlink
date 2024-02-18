@@ -48,7 +48,7 @@ class LinkService(
                 "desktop" -> link.desktopUrl ?: link.defaultUrl
                 else -> link.defaultUrl
             }
-        } ?: return "https://beetlink.ru/error"
+        } ?: throw NotFoundException("ссылка не найдена")
     }
 
     private fun getClientIp(request: HttpServletRequest): String {

@@ -6,6 +6,7 @@ import ru.beetlink.backend.models.dto.request.link.LinkRequest
 import ru.beetlink.backend.models.dto.response.link.LinkInfo
 import ru.beetlink.backend.models.dto.response.link.LinkStatisticInfo
 import ru.beetlink.backend.services.LinkService
+import ru.beetlink.backend.utils.exception.InternalServerException
 import java.time.LocalDate
 
 @RestController
@@ -49,7 +50,11 @@ class LinkController(
         auth: Authentication
     ): List<LinkStatisticInfo> {
         val userId = auth.principal as Long
-        return linkService.getLinkStatistics(userId, linkId, LocalDate.parse(startDate), LocalDate.parse(endDate))
+        return try {
+            linkService.getLinkStatistics(userId, linkId, LocalDate.parse(startDate), LocalDate.parse(endDate))
+        } catch (e: InternalServerException) {
+            listOf()
+        }
     }
 
 }
