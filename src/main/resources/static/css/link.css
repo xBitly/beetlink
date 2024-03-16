@@ -286,7 +286,7 @@ h3 {
         position: static;
         height: auto;
         margin-top: 66px;
-        padding: 16px 16px 32px 16px;
+        padding: 16px;
         gap: 8px;
         border-bottom-left-radius: 32px;
         border-bottom-right-radius: 32px;
@@ -294,9 +294,10 @@ h3 {
     }
 
     .div-right {
-        width: calc(100% - 32px);
+        width: 100%;
         margin-top: 0;
         margin-left: 0;
+        padding: 0;
         align-items: flex-end;
     }
 
@@ -309,8 +310,11 @@ h3 {
     }
 
     .date-div {
+        width: calc(100% - 32px);
         background: #FFFFFF;
         border-radius: 16px;
+        margin-right: 16px;
+        margin-left: 16px;
         gap: 16px;
     }
 
@@ -407,6 +411,10 @@ h3 {
         color: #BBB;
         font-size: 14px;
         font-weight: 400;
+    }
+
+    #export {
+        margin-right: 16px;
     }
 
     #errorNotification {
